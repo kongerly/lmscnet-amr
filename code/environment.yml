@@ -1,0 +1,23 @@
+name: na-lmscnet
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11.15
+  - pip=26.2.1
+  - numpy=2.4.6
+  - scipy=1.17.1
+  - scikit-learn=1.8.0
+  - pandas=3.0.5
+  - h5py=3.15.1
+  - matplotlib=3.10.9
+  - seaborn=0.13.2
+  - pyyaml=6.0.3
+  - tqdm=4.67.3
+  - pytest=9.0.3
+  - pytest-cov=7.0.0
+  - ruff=0.15.22
+  - pip-audit=2.10.1
+  - pip:
+      - --index-url https://download.pytorch.org/whl/cu130
+      - torch==2.13.0+cu130

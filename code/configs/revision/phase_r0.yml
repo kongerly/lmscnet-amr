@@ -1,0 +1,100 @@
+schema_version: 1
+revision_id: controlled_content_adaptive_fusion_major_revision_v1
+phase: R0
+authority: .agents/PLAN.md
+status: ready_for_namespace_initialization
+
+historical_cutoff:
+  event: radioml_2016_10a_test_consumed
+  date: 2026-08-13
+  implementation_commit: c04d5bc358ba2b4b350af6eaf900861495f51f9e
+  marker_path: D:\Datasets\RadioML\experiment-freeze-c04d5bc\test-consumed.json
+  marker_sha256: 7d581c860e4c67b870f6c8c49cbce22c8dc55d0384034fc4889e70566747f0e4
+  retry_allowed: false
+
+decision_source:
+  path: paper/top_reviewer_reassessment_with_new_experiments_2026-08-14.md
+  date: 2026-08-14
+  sha256: bab74720693cb158461226efa240080ea86b3d0ac132c78ca84f67ae2d500dff
+
+historical_evidence:
+  - id: PRE1
+    description: Frozen S0/S1/S2 and baseline validation evidence.
+    role: historical_validation
+  - id: PRE2
+    description: RadioML 2018.01A validation-only replication for the historical model family.
+    role: historical_validation
+  - id: PRE3
+    description: One-shot RadioML 2016.10A S2 versus SE-MSFN-1D evaluation.
+    role: original_frozen_evaluation
+    reusable_for_new_hypotheses: false
+
+post_test_hypotheses:
+  - id: H1
+    formed_on: 2026-08-14
+    estimand: S2-aligned versus S1-static
+    purpose: Exclude equal weighting as the explanation.
+    experiment_ids: [S2-aligned, S1-static]
+  - id: H2
+    formed_on: 2026-08-14
+    estimand: S2-aligned versus S2-mean
+    purpose: Test whether sample-level gate variation adds value.
+    experiment_ids: [S2-aligned, S2-mean]
+  - id: H3
+    formed_on: 2026-08-14
+    estimand: S2-aligned versus S2-shuffled
+    purpose: Test input-weight correspondence while preserving gate marginals.
+    experiment_ids: [S2-aligned, S2-shuffled]
+  - id: H4
+    formed_on: 2026-08-14
+    estimand: S2-aligned versus S1-wide-static
+    purpose: Exclude additional parameter capacity as the explanation.
+    experiment_ids: [S2-aligned, S1-wide-static]
+  - id: H5
+    formed_on: 2026-08-14
+    estimand: S2-aligned versus the pre-specified strongest direct neighbor
+    purpose: Assess competitiveness against SKNet-1D, AFNet adaptation, and retained neighbors.
+    experiment_ids: [S2-aligned, SKNet-1D, AFNet-adaptation, SE-MSFN-1D]
+
+post_test_rules:
+  classification: post_test_hypothesis
+  allowed_development_splits:
+    - radioml_2016_10a_train
+    - radioml_2016_10a_validation
+  forbidden_splits:
+    - radioml_2016_10a_test
+    - radioml_2018_01a_test
+  no_relabeling_as_pre_test: true
+  old_test_may_not_support_component_claims: true
+
+post_test_editorial_decisions:
+  - id: D1
+    decision: Use controlled evaluation of content matching versus static preference as the revision question.
+  - id: D2
+    decision: Make content adaptivity conditional on C1, C2a, C2b, C3, and a new confirmatory test.
+  - id: D3
+    decision: Keep Digital Signal Processing as a conditional rather than guaranteed target.
+
+confirmatory_test:
+  status: blocked
+  construction_allowed: false
+  selected_candidate: null
+  candidates:
+    radioml_2018_01a:
+      status: ineligible
+      audit_report: D:\Datasets\RadioML\revision-r0-2018-test-independence-audit-2026-08-14-v2\radioml-2018.01a-test-independence-report.json
+      audit_report_sha256: 85328b53a1af88362f87639de2ec5fdcb09c7d387dcb3e2639aeaeb4fa3a2b88
+    alternative:
+      status: unselected
+  unlock_requires:
+    - traceable_source_and_license
+    - independence_audit
+    - revision_freeze_manifest
+    - one_shot_authorization
+
+artifact_namespace:
+  directory_name: revision-controlled-fusion-r0-20260814-v3
+  allowed_top_level_directories: [audits, logs, manifests, reports, smoke, validation]
+  forbidden_top_level_directories: [test, test-only-results, confirmatory-test]
+  overwrite: false
+  formal_runs_authorized: false

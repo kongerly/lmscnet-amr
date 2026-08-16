@@ -1,0 +1,30 @@
+schema_version: 1
+dataset_id: radioml_2016_10a
+display_name: RADIOML 2016.10A
+provider: DeepSig, Inc.
+official_page: https://www.deepsig.ai/datasets/
+official_download_endpoint: https://opendata.deepsig.io/datasets/2016.10/RML2016.10a.tar.bz2
+license: CC-BY-NC-SA-4.0
+archive_filename: RML2016.10a.tar.bz2
+generator:
+  repository: https://github.com/radioML/dataset
+  commit: 4ecf612cfbc5bfc80eb8b0dbe63ed685d0a73c44
+  script: generate_RML2016.10a.py
+expected:
+  sample_shape: [2, 128]
+  dtype: float32
+  samples_per_cell: 1000
+  total_samples: 220000
+  modulations:
+    - 8PSK
+    - AM-DSB
+    - AM-SSB
+    - BPSK
+    - CPFSK
+    - GFSK
+    - PAM4
+    - QAM16
+    - QAM64
+    - QPSK
+    - WBFM
+  snr_db: [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18]

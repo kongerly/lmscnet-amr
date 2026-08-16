@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/kongerly/lmscnet-amr",
+  "paper_title": "A Controlled Study of Multi-Scale Gating for Low-SNR Automatic Modulation Recognition",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 LMSCNet-AMR contributors",
+  "primary_language": "English",
+  "personal_metadata_policy": "author and submission metadata must be supplied from untracked external files",
+  "release_scope": "source_config_tests_and_sanitized_reproducibility_metadata",
+  "training_seeds": [
+    13,
+    37,
+    73,
+    101,
+    137
+  ],
+  "split_ranking_seed": 2026,
+  "split_assignment_sha256": "0037530e0f65df3eb0ba9f948764beb960ead5551b646a9fc5c6f735703e8941",
+  "r6_validation_freeze_sha256": "c76f1738ba3cb0aee2d15b8c0d008c18321a0c7d729bc9c3feb66829458aa2c1",
+  "r7_submission_audit_sha256": "2a4288c23c0ba92217fed2c2d162ce24d2f6f8aace1def9e57e8f326762089cb",
+  "r7_no_new_test_freeze_sha256": "1b41cffd20ac3a4b8133b9616cad6638f74764e69d62d23814cd79ee9c7023bd",
+  "test_accessed": false,
+  "test_authorized": false,
+  "excluded": [
+    "datasets",
+    "split indexes",
+    "checkpoints",
+    "predictions",
+    "metrics",
+    "bootstrap outputs",
+    "generated figures",
+    "submission packages"
+  ],
+  "files": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "57c34e91b7d33b20eabe1cc74f1f1848b85792b74ed0410002e8a0ad67627ab9"
+    },
+    {
+      "path": "code/environment.yml",
+      "sha256": "54b150142e66f972836c5901b8d9ee3a48ec853d9a9b08cfd995c9ad9fb0ef64"
+    },
+    {
+      "path": "code/src/na_lmscnet/models/final_lmscnet.py",
+      "sha256": "0a9aa566fd423bc7124807d555c30a2e9b3f8beaaabba031d2f32714f4bdc853"
+    },
+    {
+      "path": "code/src/na_lmscnet/models/extended_baselines.py",
+      "sha256": "6705dbd8e7e70496a774699e0b0b84771342ac73d5f0366e5f6dd06fb0f30c84"
+    },
+    {
+      "path": "code/src/na_lmscnet/training/engine.py",
+      "sha256": "1c24417e1755206697a4825a8e1feb56c5fdc5399bfbe90d715267c7ce794abf"
+    },
+    {
+      "path": "code/configs/revision/phase_r1.yml",
+      "sha256": "aa73e6081d28f587b0f5e693818a6b4519ee359314e0f2c7f8f2d5092b626eaa"
+    },
+    {
+      "path": "code/configs/revision/phase_r6.yml",
+      "sha256": "c5f98ce47c0bfaff8a37272ecf748e8456ee67ed135342d27a5b5b239d14c25e"
+    },
+    {
+      "path": "code/configs/experiments/revision_r6_s2_fixed_epoch_radioml_2016_10a.yml",
+      "sha256": "91e5e67d453102beae45001a8cdad008defce339980ad5c101c357a653fd1092"
+    },
+    {
+      "path": "code/configs/experiments/revision_r6_s1_static_fixed_epoch_radioml_2016_10a.yml",
+      "sha256": "2dbd83b14d08a344afadfd02942803e1c36207bb68aac5093048e40c60ab2fef"
+    },
+    {
+      "path": "code/configs/experiments/revision_r6_s1_wide_static_fixed_epoch_radioml_2016_10a.yml",
+      "sha256": "5f712e286db4414c90bf79b95cfdfb4d065470eebef35243f2685804f6d5205e"
+    },
+    {
+      "path": "code/configs/experiments/revision_r6_sknet_1d_fixed_epoch_radioml_2016_10a.yml",
+      "sha256": "5facce19a6465ce7b8f273ccbca596d3cbabab3fd5eb586c479825178d044d2a"
+    },
+    {
+      "path": "code/configs/experiments/revision_r6_afnet_fixed_epoch_radioml_2016_10a.yml",
+      "sha256": "21f9f138cda82f7983740a45fb7e4d0abc4e6a0ca60febcc1461b05fa76a8b64"
+    },
+    {
+      "path": "code/scripts/run_r2_primary_contrasts.py",
+      "sha256": "37299cc377f2bbe6b945817f9fedf8033b7610afa73c72e277f6809d7b052bf7"
+    },
+    {
+      "path": "code/scripts/run_r6_fixed_epoch_contrasts.py",
+      "sha256": "a8007bbe4ca6dfb7a1103f7b98993c85ef7d6a010b79bfbce88e60de478f6344"
+    },
+    {
+      "path": "code/scripts/audit_r2_intervention_validity.py",
+      "sha256": "20ed3cbd30fa506fc15d168534547dd623bb82fd540efd9d6e4f5d309de42796"
+    },
+    {
+      "path": "code/scripts/generate_r6_validation_freeze.py",
+      "sha256": "9f77f31fa83052deb828c2970aedaf99a36ffb67c827e394fff3e1b0b0073eaf"
+    }
+  ]
+}

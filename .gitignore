@@ -1,0 +1,74 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials*.json
+secrets/
+author_metadata*.json
+**/author_metadata*.json
+
+# Local research materials and internal workflow records
+/literature/
+/.agents/
+/AGENTS.md
+
+# Python and tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Datasets and serialized arrays
+/data/
+/datasets/
+code/data/
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.npy
+*.npz
+RML*.tar.bz2
+RML*.dat
+*.dataset-inventory.json
+*.pickle-scan.json
+*.pickle-schema.json
+*.numeric-audit.json
+*.conversion-manifest.json
+*.split-manifest.json
+*.leakage-audit.json
+*.near-duplicate-audit.json
+*.near-duplicate-fixture-audit.json
+*.near-duplicate-calibration.json
+*.near-duplicate-review.json
+*.experiment-freeze-manifest.json
+
+# Training artifacts
+outputs/
+code/outputs/
+checkpoints/
+runs/
+wandb/
+mlruns/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+
+# Build artifacts
+build/
+dist/
+*.egg-info/

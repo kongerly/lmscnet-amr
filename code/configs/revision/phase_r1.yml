@@ -1,0 +1,47 @@
+schema_version: 1
+revision_id: controlled_content_adaptive_fusion_major_revision_v1
+phase: R1
+authority: .agents/PLAN.md
+status: implementation_and_bounded_smoke
+historical_cutoff:
+  event: radioml_2016_10a_test_consumed
+  date: 2026-08-13
+forbidden_splits:
+  - radioml_2016_10a_test
+  - radioml_2018_01a_test
+models:
+  - id: S1-static
+    model_name: lmscnet_s1_static
+    purpose: learned_global_static_fusion
+  - id: S1-wide-static
+    model_name: lmscnet_s1_wide_static
+    purpose: parameter_matched_static_control
+    expansion: 1.8
+  - id: S2-mean
+    model_name: lmscnet_s2_mean
+    purpose: train_only_mean_gate_intervention
+  - id: S2-shuffled
+    model_name: lmscnet_s2_shuffled
+    purpose: gate_content_correspondence_intervention
+  - id: SKNet-1D
+    model_name: sknet_1d_adaptation
+    purpose: channel_wise_selective_kernel_neighbor
+    source: li2019sknet
+  - id: AFNet adaptation
+    model_name: afnet_adaptation
+    purpose: lambda_softmax_adaptive_fusion_neighbor
+    source: shi2022afnet
+    adaptation_notes: 2-D conv to 1-D I/Q, nine AF units mapped to shared six-block backbone, lambda 1/2 fusion modules preserved per block
+permutation:
+  seeds: [13, 37, 73, 101, 137, 211, 307, 401, 503, 601, 701, 809, 907, 1009, 1103, 1201, 1301, 1409, 1511, 1601]
+  scope: batch_local_fixed_seed
+  fixed_points_allowed: true
+parameter_matching:
+  target_model: lmscnet_s2
+  candidate_expansions: [1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8]
+  selection_metric: absolute_parameter_count_difference
+  validation_metrics_allowed: false
+smoke:
+  synthetic_only: true
+  test_accessed: false
+  formal_runs_authorized: false

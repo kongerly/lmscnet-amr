@@ -1,0 +1,42 @@
+schema_version: 1
+fixture_contract_id: radioml_2016_10a_near_duplicate_fixture_v1
+near_duplicate_contract:
+  contract_id: radioml_2016_10a_near_duplicate_v1
+  contract_sha256: 838279190535d83cc20dd0dda4006076bd85027334038e68f3632f5c8baf7c05
+sample_domain:
+  sample_shape: [2, 128]
+fixture_source:
+  generator: sha256-counter-float32-v1
+  finite_input_required: true
+  positive_rms_required: true
+calibration_fixture:
+  positive_cases: 128
+  positive_quantization: source_float32_round_trip
+  global_complex_gain_cycle:
+    - {real: 1.0, imag: 0.0}
+    - {real: -2.0, imag: 0.0}
+    - {real: 0.0, imag: 0.5}
+    - {real: 0.0, imag: -2.0}
+  shift_rule: ((case_index * 37) + 11) mod 128
+  negative_cases: 1024
+  negative_seed: 2026
+threshold_selection:
+  rule: floor_min_positive_score_to_12_decimal_places
+  positive_recall_required: 1.0
+  negative_false_positive_rate_max: 0.001
+bounded_reference_audit:
+  sample_count: 64
+  base_transform_pairs: 16
+  unrelated_samples: 32
+  algorithm: exhaustive_pairwise_reference_v1
+  expected_pair_count: 2016
+  candidate_recall_required: 1.0
+  production_claim: false
+publication:
+  writes_artifacts: false
+  output: stdout_summary_only
+  absolute_paths: false
+generation_gate:
+  production_candidate_generation_enabled: false
+  near_duplicate_audit_generation_enabled: false
+  split_generation_enabled: true

@@ -1,0 +1,16 @@
+schema_version: 1
+sweep_id: na_lmscnet_radioml_2016_10a_validation_sweep_v1
+base_config: na_lmscnet_radioml_2016_10a.yml
+seed: 13
+grid:
+  learning_rate: [0.001, 0.0003]
+  dropout: [0.0, 0.2]
+selection:
+  primary: validation_macro_f1_desc
+  tie_break: [validation_loss_asc, run_id_asc]
+test_access: forbidden
+execution:
+  mode: sequential
+  resume_completed_runs: true
+  output_outside_repository: true
+  overwrite_completed_runs: false

@@ -1,0 +1,120 @@
+schema_version: 1
+contract_id: radioml_2016_10a_hdf5_v1
+dataset_id: radioml_2016_10a
+source:
+  archive_filename: RML2016.10a.tar.bz2
+  archive_size_bytes: 228491318
+  archive_sha256: 7a1603dd61e557f45b6e113dc0c59be02a14509b77856c31bbb324a993f7974c
+  dataset_content_sha256: bcaf1ea9bca18db5b5e179352b18504e6f92d1db7f4cf5b12673c2e3fba9aef9
+format:
+  name: hdf5
+  library: h5py
+  output_filename: RML2016.10a.h5
+  libver: earliest
+  datasets:
+    iq:
+      path: /iq
+      dtype: <f4
+      shape: [220000, 2, 128]
+      chunks: [256, 2, 128]
+      compression: null
+      shuffle: false
+      fletcher32: true
+      track_times: false
+    modulation_index:
+      path: /modulation_index
+      dtype: '|u1'
+      shape: [220000]
+      chunks: [4096]
+      compression: null
+      shuffle: false
+      fletcher32: true
+      track_times: false
+    snr_db:
+      path: /snr_db
+      dtype: '|i1'
+      shape: [220000]
+      chunks: [4096]
+      compression: null
+      shuffle: false
+      fletcher32: true
+      track_times: false
+    source_index:
+      path: /source_index
+      dtype: <u2
+      shape: [220000]
+      chunks: [4096]
+      compression: null
+      shuffle: false
+      fletcher32: true
+      track_times: false
+    modulation_names:
+      path: /modulation_names
+      dtype: '|S6'
+      shape: [11]
+      chunks: null
+      compression: null
+      shuffle: false
+      fletcher32: false
+      track_times: false
+ordering:
+  dimensions: [modulation, snr_db, source_index]
+  modulation_order:
+    - 8PSK
+    - AM-DSB
+    - AM-SSB
+    - BPSK
+    - CPFSK
+    - GFSK
+    - PAM4
+    - QAM16
+    - QAM64
+    - QPSK
+    - WBFM
+  snr_db_order: [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+  source_index:
+    start: 0
+    stop: 1000
+    step: 1
+sample_id:
+  scheme: source-coordinate-v1
+  separator: ':'
+  fields: [dataset_id, modulation, snr_db, source_index]
+  snr_format: signed-width-3
+  source_index_width: 4
+manifest:
+  schema_version: 1
+  filename: RML2016.10a.conversion-manifest.json
+  hash_algorithm: sha256
+  absolute_paths: false
+  required_digests:
+    - conversion_contract_sha256
+    - dataset_spec_sha256
+    - source_archive_sha256
+    - source_dataset_content_sha256
+    - output_file_sha256
+    - output_logical_content_sha256
+    - iq_dataset_sha256
+    - modulation_index_dataset_sha256
+    - snr_db_dataset_sha256
+    - source_index_dataset_sha256
+    - modulation_names_dataset_sha256
+  required_environment:
+    - project_commit
+    - python
+    - numpy
+    - h5py
+    - hdf5
+  logical_digest:
+    dataset_order: [iq, modulation_index, snr_db, source_index, modulation_names]
+    dataset_bytes: canonical-c-order
+    record_framing: length-prefixed-v1
+    length_encoding: unsigned-big-endian-8
+    digest_encoding: raw-32-bytes
+writer:
+  mode: single-process
+  swmr: false
+  overwrite: false
+  temporary_same_directory: true
+  fsync_before_publish: true
+  manifest_published_last: true

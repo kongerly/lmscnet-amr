@@ -1,0 +1,17 @@
+schema_version: 1
+experiment_id: lmscnet_s1_radioml_2016_10a_smoke_v1
+purpose: infrastructure_smoke_only
+model: {name: lmscnet_s1, num_classes: 11, dropout: 0.2, expansion: 1.25}
+data:
+  dataset_id: radioml_2016_10a
+  assignment_sha256: 0037530e0f65df3eb0ba9f948764beb960ead5551b646a9fc5c6f735703e8941
+  batch_size: 32
+  num_workers: 0
+  pin_memory: true
+  train_augmentation: {random_phase_rotation: true, random_circular_shift: true}
+optimizer: {name: adamw, learning_rate: 0.001, weight_decay: 0.0001}
+scheduler: {name: cosine_annealing}
+training: {seed: 13, max_epochs: 1, early_stopping_patience: 1, early_stopping_min_delta: 0.0, amp: true, deterministic: true, max_train_batches: 2, max_validation_batches: 2}
+selection_metric: validation_macro_f1
+test_access: forbidden
+artifacts: {output_outside_repository: true, overwrite: false}

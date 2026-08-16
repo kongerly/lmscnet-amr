@@ -1,0 +1,128 @@
+schema_version: 1
+contract_id: radioml_2016_10a_split_v1
+dataset_id: radioml_2016_10a
+source:
+  dataset_spec_sha256: 016d42ea6555d9b00751307705b0722d7feff38636427aa3fcdb63a0d5389773
+  conversion_contract_sha256: ec89644a023e909424142b22905ba9acbcfff41c94370a954f44b00b25e0eac1
+  source_archive_sha256: 7a1603dd61e557f45b6e113dc0c59be02a14509b77856c31bbb324a993f7974c
+  source_dataset_content_sha256: bcaf1ea9bca18db5b5e179352b18504e6f92d1db7f4cf5b12673c2e3fba9aef9
+  hdf5:
+    filename: RML2016.10a.h5
+    size_bytes: 226409344
+    file_sha256: 96120f40a9190bf24697227aaa7377a4e1cf883b3bb1b602b176f2622ebf7c63
+    logical_content_sha256: 0713dd71751ff18fa0f0de26e570afb0f18a8e00191748a3c4a10f9a3271bce4
+  conversion_manifest:
+    filename: RML2016.10a.conversion-manifest.json
+    file_sha256: de5bcb3dc6c490dca774d18bb7f3d3fd79634b55f9e2c31af244ac55b8ea776e
+    implementation_commit: 3d836ca356b2a78aa9b94bd54a2468db9bca24b9
+stratification:
+  fields: [modulation, snr_db]
+  modulation_order:
+    - 8PSK
+    - AM-DSB
+    - AM-SSB
+    - BPSK
+    - CPFSK
+    - GFSK
+    - PAM4
+    - QAM16
+    - QAM64
+    - QPSK
+    - WBFM
+  snr_db_order: [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+  strata: 220
+  samples_per_stratum: 1000
+  split_order: [train, validation, test]
+  ratio_weights:
+    train: 7
+    validation: 1
+    test: 2
+  rounding:
+    algorithm: largest-remainder-v1
+    tie_break: split-order
+  expected_per_stratum:
+    train: 700
+    validation: 100
+    test: 200
+  expected_totals:
+    train: 154000
+    validation: 22000
+    test: 44000
+assignment:
+  seed: 2026
+  algorithm: sha256-rank-v1
+  independently_rank_each_stratum: true
+  sample_identity:
+    scheme: source-coordinate-v1
+    separator: ':'
+    fields: [dataset_id, modulation, snr_db, source_index]
+    snr_format: signed-width-3
+    source_index_width: 4
+  ranking_record:
+    fields: [domain, seed_decimal, sample_id]
+    domain: na-lmscnet/radioml_2016_10a/split-ranking/v1
+    text_encoding: utf-8
+    framing: length-prefixed-v1
+    length_encoding: unsigned-big-endian-8
+  ordering:
+    rank_by: [sha256_digest_bytes, sample_id_utf8_bytes]
+    assignment_by: contiguous-split-order
+    manifest_rows: ascending-hdf5-row-index
+leakage:
+  exact_duplicates:
+    representation: canonical-little-endian-float32-iq-bytes
+    digest: sha256
+    scope: all-samples
+    cross_split_policy: reject
+    within_split_policy: report
+  near_duplicates:
+    required_for_split_generation: false
+    audit_contract: radioml_2016_10a_near_duplicate_v1
+    bounded_fixture_verified: true
+    global_production_audit_completed: false
+    policy: record-unverified-limitation
+  adjacent_windows:
+    provenance: unavailable-in-radioml-2016-10a
+    source_index_semantics: within-cell-array-position-only
+    source_index_is_window_group: false
+    policy: record-limitation-and-never-claim-verified
+test_isolation:
+  training_allowed_splits: [train]
+  tuning_allowed_splits: [train, validation]
+  test_access_requires: experiment-freeze-manifest-v1
+  freeze_must_bind:
+    - split_manifest_sha256
+    - experiment_config_sha256
+    - project_commit
+    - run_seeds
+    - selected_checkpoints
+  test_metrics_before_freeze: forbidden
+manifest:
+  schema_version: 1
+  filename: RML2016.10a.split-manifest.json
+  leakage_audit_filename: RML2016.10a.leakage-audit.json
+  hash_algorithm: sha256
+  absolute_paths: false
+  assignment_encoding: sorted-hdf5-row-indices
+  required_bindings:
+    - split_contract_sha256
+    - dataset_spec_sha256
+    - conversion_contract_sha256
+    - conversion_manifest_sha256
+    - source_archive_sha256
+    - source_dataset_content_sha256
+    - hdf5_file_sha256
+    - hdf5_logical_content_sha256
+    - assignment_sha256
+  required_environment: [project_commit, python, numpy, h5py, hdf5]
+publication:
+  output_outside_repository: true
+  mode: single-process
+  overwrite: false
+  temporary_same_directory: true
+  fsync_before_publish: true
+  split_manifest_published_before_leakage_audit: true
+  leakage_audit_is_completion_marker: true
+generation_gate:
+  split_generation_enabled: true
+  blocked_by: []

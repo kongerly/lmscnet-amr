@@ -1,0 +1,52 @@
+schema_version: 1
+dataset_id: radioml_2018_01a
+display_name: RadioML 2018.01A
+provider: DeepSig, Inc.
+official_page: https://www.deepsig.ai/datasets/
+official_download_endpoint: https://opendata.deepsig.io/datasets/2018.01/2018.01.OSC.0001_1024x2M.h5.tar.gz
+license: CC-BY-NC-SA-4.0
+source:
+  archive_filename: 2018.01.OSC.0001_1024x2M.h5.tar.gz
+  archive_size_bytes: 19342413140
+  archive_sha256: 90725106c5fb08ad603d55ab22864eb0c80869f861a14e3c7835180957af8fd3
+  hdf5_filename: GOLD_XYZ_OSC.0001_1024.hdf5
+  hdf5_size_bytes: 21449148312
+  hdf5_sha256: e3dd0bef66a3426959ee66a1709a8c0a95d4f8395d18aaf6f1214bdbc763bd38
+  classes_filename: classes.txt
+  license_filename: LICENSE.TXT
+expected:
+  x_shape: [2555904, 1024, 2]
+  y_shape: [2555904, 24]
+  z_shape: [2555904, 1]
+  x_dtype: float32
+  y_dtype: int64
+  z_dtype: int64
+  model_sample_shape: [2, 1024]
+  samples_per_stratum: 4096
+  total_samples: 2555904
+  modulations:
+    - 32PSK
+    - 16APSK
+    - 32QAM
+    - FM
+    - GMSK
+    - 32APSK
+    - OQPSK
+    - 8ASK
+    - BPSK
+    - 8PSK
+    - AM-SSB-SC
+    - 4ASK
+    - 16PSK
+    - 64APSK
+    - 128QAM
+    - 128APSK
+    - AM-DSB-SC
+    - AM-SSB-WC
+    - 64QAM
+    - QPSK
+    - 256QAM
+    - AM-DSB-WC
+    - OOK
+    - 16QAM
+  snr_db: [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]

@@ -1,0 +1,111 @@
+schema_version: 1
+contract_id: radioml_2016_10a_near_duplicate_v1
+dataset_id: radioml_2016_10a
+source:
+  dataset_spec_sha256: 016d42ea6555d9b00751307705b0722d7feff38636427aa3fcdb63a0d5389773
+  conversion_contract_sha256: ec89644a023e909424142b22905ba9acbcfff41c94370a954f44b00b25e0eac1
+  source_archive_sha256: 7a1603dd61e557f45b6e113dc0c59be02a14509b77856c31bbb324a993f7974c
+  source_dataset_content_sha256: bcaf1ea9bca18db5b5e179352b18504e6f92d1db7f4cf5b12673c2e3fba9aef9
+  hdf5:
+    filename: RML2016.10a.h5
+    logical_content_sha256: 0713dd71751ff18fa0f0de26e570afb0f18a8e00191748a3c4a10f9a3271bce4
+sample_domain:
+  total_samples: 220000
+  sample_shape: [2, 128]
+  modulation_count: 11
+  snr_count: 20
+  cell_count: 220
+  samples_per_cell: 1000
+representations:
+  exact_bytes:
+    id: canonical-little-endian-float32-iq-bytes-v1
+    input: /iq
+    operation: sha256_raw_c_order_bytes
+    purpose: exact_duplicate_reference
+  transformed_similarity:
+    id: power-normalized-complex-circular-correlation-v1
+    input: /iq
+    complex_mapping: z[t] = float32(i[t]) + j * float32(q[t])
+    finite_input_required: true
+    mean_removal: false
+    power_normalization: rms_complex_amplitude
+    allowed_transform_family:
+      - global_nonzero_complex_gain
+      - integer_circular_time_shift
+    forbidden_transform_family:
+      - resampling
+      - time_scaling
+      - conjugation
+      - clipping
+      - additive_noise
+    similarity:
+      id: max_abs_normalized_circular_cross_correlation-v1
+      formula: max_lag(abs(sum(conj(z_a[t]) * z_b[(t+lag) mod length]))) / (norm(z_a) * norm(z_b))
+      score_range: [0.0, 1.0]
+      exact_transform_score: 1.0
+      numerical_dtype: float64
+      lag_domain: [0, 127]
+      phase_invariant: true
+candidate_generation:
+  status: reference_only
+  algorithm: exhaustive_pairwise_reference_v1
+  production_enabled: false
+  fixture_enabled: true
+  fixture_max_samples: 64
+  candidate_recall_requirement: 1.0
+  candidate_recall_evidence: required_before_production
+  blocking_keys: none
+  false_negative_policy: any_unproven_recall_is_blocking
+threshold_calibration:
+  status: pending
+  threshold: null
+  positive_fixture:
+    required_transforms: [global_nonzero_complex_gain, integer_circular_time_shift]
+    quantization: source_float32_round_trip
+    minimum_cases: 128
+  negative_fixture:
+    construction: independently_seeded_nonmatching_pairs
+    seed: 2026
+    minimum_cases: 1024
+  acceptance:
+    positive_recall: 1.0
+    negative_false_positive_rate_max: 0.001
+    calibration_report_required: true
+    unresolved_threshold_blocks_split_generation: true
+review:
+  status: pending
+  pair_labels: [same_source_transform, unrelated, ambiguous]
+  ambiguous_policy: manual_review_and_block
+  reviewer_record_required: true
+  reviewer_record_fields: [pair_digest, decision, reviewer, timestamp_utc, reason]
+  reviewer_record_absolute_paths: false
+report:
+  schema_version: 1
+  filename: RML2016.10a.near-duplicate-audit.json
+  hash_algorithm: sha256
+  absolute_paths: false
+  required_bindings:
+    - near_duplicate_contract_sha256
+    - dataset_spec_sha256
+    - conversion_contract_sha256
+    - source_archive_sha256
+    - source_dataset_content_sha256
+    - hdf5_logical_content_sha256
+    - calibration_report_sha256
+    - candidate_assignment_sha256
+    - pair_decision_sha256
+  required_environment: [project_commit, python, numpy, h5py, hdf5]
+publication:
+  output_outside_repository: true
+  mode: single-process
+  overwrite: false
+  temporary_same_directory: true
+  fsync_before_publish: true
+  audit_report_is_completion_marker: true
+generation_gate:
+  audit_generation_enabled: false
+  split_generation_enabled: true
+  audit_blocked_by:
+    - candidate_recall_evidence
+    - threshold_calibration
+    - manual_review_protocol

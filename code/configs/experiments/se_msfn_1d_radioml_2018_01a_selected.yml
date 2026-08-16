@@ -1,0 +1,36 @@
+schema_version: 1
+experiment_id: se_msfn_1d_radioml_2018_01a_selected_v1
+purpose: publication_candidate
+model:
+  name: se_msfn_1d
+  num_classes: 24
+  dropout: 0.2
+data:
+  dataset_id: radioml_2018_01a
+  assignment_sha256: db3854fb698cd0b66a5ae67f1286535b06d890264ee3141895adafea0371fc01
+  batch_size: 256
+  num_workers: 4
+  pin_memory: true
+  train_augmentation:
+    random_phase_rotation: true
+    random_circular_shift: true
+optimizer:
+  name: adamw
+  learning_rate: 0.001
+  weight_decay: 0.0001
+scheduler:
+  name: cosine_annealing
+training:
+  seed: 13
+  max_epochs: 100
+  early_stopping_patience: 12
+  early_stopping_min_delta: 0.0
+  amp: true
+  deterministic: true
+  max_train_batches: null
+  max_validation_batches: null
+selection_metric: validation_macro_f1
+test_access: forbidden
+artifacts:
+  output_outside_repository: true
+  overwrite: false

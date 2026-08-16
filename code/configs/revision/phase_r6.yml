@@ -1,0 +1,71 @@
+schema_version: 1
+revision_id: controlled_multi_scale_gating_selection_bias_correction_v1
+phase: R6
+authority: .agents/PLAN.md
+status: validation_assessment_complete
+authorized_on: 2026-08-15
+objective: fixed_epoch_checkpoint_selection_without_validation_early_stopping
+forbidden_splits:
+  - radioml_2016_10a_test
+  - radioml_2018_01a_test
+checkpoint_protocol:
+  selection_metric: fixed_epoch
+  checkpoint_epoch: 100
+  max_epochs: 100
+  validation_early_stopping_allowed: false
+  validation_used_for_checkpoint_selection: false
+  validation_role: post_training_assessment_only
+models:
+  - lmscnet_s2
+  - lmscnet_s1_static
+  - lmscnet_s1_wide_static
+  - sknet_1d_adaptation
+  - afnet_adaptation
+seeds: [13, 37, 73, 101, 137]
+primary_metrics:
+  - low_snr_accuracy
+  - overall_accuracy
+  - macro_f1
+artifact_namespace:
+  directory_name: revision-selection-bias-correction-r6-20260815-v1
+  allowed_top_level_directories: [audits, logs, manifests, reports, smoke, validation]
+  forbidden_top_level_directories: [test, test-only-results, confirmatory-test]
+  overwrite: false
+formal_training:
+  authorized: true
+  authorization_basis:
+    implementation_commit: a25751505346a918ab83afb739b926cf20441da8
+    smoke_audit: D:\Datasets\RadioML\revision-selection-bias-correction-r6-20260815-v1\audits\r6-smoke-audit-a257515\r6-smoke-audit.json
+    smoke_audit_sha256: 4fddec729147bf80541ee5c886c444e45b1051e119b974911881f0051681b9a8
+  requires:
+    - clean_git_commit_binding
+    - config_hash_manifest
+    - bounded_smoke_pass
+  completed: true
+  completed_on: 2026-08-16
+  training_commit: b6c56ced7b6893a135554b4c8a5fb3c089f58744
+  run_count: 25
+  checkpoint_epoch: 100
+  last_pt_count: 0
+validation_evidence:
+  completed: true
+  test_accessed: false
+  queue_audit: audits/r6-fixed-epoch-queue-b6c56ce/r6-fixed-epoch-queue-audit.json
+  five_seed_summary: reports/r6-fixed-epoch-summary-b6c56ce/r6-fixed-epoch-five-seed-summary.json
+  contrasts: reports/r6-fixed-epoch-contrasts-b6c56ce/r6-fixed-epoch-contrasts.json
+  intervention_audit: audits/r6-intervention-validity-b6c56ce/r25-intervention-validity-report.json
+  validation_freeze: manifests/r6-validation-freeze-b6c56ce/r6-validation-freeze-manifest.json
+  validation_freeze_sha256: c76f1738ba3cb0aee2d15b8c0d008c18321a0c7d729bc9c3feb66829458aa2c1
+  does_not_replace_phase_r2_gatekeeping: true
+confirmatory_test:
+  candidate_selected: false
+  screened_candidate:
+    id: radioml_2016_04c
+    status: screened_but_unselected
+    dataset_present: false
+    sample_content_read: false
+    intended_role: one_shot_cross_version_synthetic_transfer_evaluation
+    source_screening: paper/r6_confirmatory_candidate_screening_2026-08-15.md
+  construction_allowed: false
+  content_read_allowed: false
+  one_shot_authorized: false

@@ -1,0 +1,28 @@
+schema_version: 1
+contract_id: radioml_2018_01a_split_v1
+dataset_id: radioml_2018_01a
+stratification:
+  fields: [class_index, snr_db]
+  class_count: 24
+  snr_db: [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+  strata: 624
+  samples_per_stratum: 4096
+  split_order: [train, validation, test]
+  ratio_weights: {train: 7, validation: 1, test: 2}
+  rounding: {algorithm: largest-remainder-v1, tie_break: split-order}
+  expected_per_stratum: {train: 2867, validation: 410, test: 819}
+  expected_totals: {train: 1789008, validation: 255840, test: 511056}
+assignment:
+  seed: 2026
+  algorithm: sha256-rank-v1
+  independently_rank_each_stratum: true
+  sample_identity: source-coordinate-v1
+  ranking_domain: na-lmscnet/radioml_2018_01a/split-ranking/v1
+test_isolation:
+  training_allowed_splits: [train]
+  tuning_allowed_splits: [train, validation]
+  test_access_requires: experiment-freeze-manifest-v1
+  test_metrics_before_freeze: forbidden
+publication:
+  output_outside_repository: true
+  overwrite: false
